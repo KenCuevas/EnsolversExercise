@@ -1,7 +1,9 @@
 package com.example.todolist.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,12 +15,13 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idfolder;
     private String name;
-
     @OneToMany(mappedBy = "folder")
     @JsonManagedReference
     private List<Task> task;
 
+
     public Folder() {
+
     }
 
     public List<Task> getTask() {
@@ -43,5 +46,14 @@ public class Folder {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Folder{" +
+                "idfolder=" + idfolder +
+                ", name='" + name + '\'' +
+                ", task=" + task +
+                '}';
     }
 }

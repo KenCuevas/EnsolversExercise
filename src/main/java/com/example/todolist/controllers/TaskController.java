@@ -1,5 +1,8 @@
 package com.example.todolist.controllers;
 
+import com.example.todolist.exceptions.FolderNotFoundException;
+import com.example.todolist.exceptions.TaskNotFoundException;
+import com.example.todolist.models.Folder;
 import com.example.todolist.models.Task;
 import com.example.todolist.repositories.TaskRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +21,11 @@ public class TaskController {
     @GetMapping("/all")
     List<Task>getAll(){
         return taskRepository.findAll();
+    }
+    @GetMapping(path = "search/{id}")
+    public Task getTask(@PathVariable Long id){
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
     @PostMapping("/add")
     public Task createTask(@RequestBody final Task task){
